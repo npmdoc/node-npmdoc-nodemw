@@ -1,0 +1,593 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+    >nodemw (v0.10.1)</a>
+</h1>
+<h4>MediaWiki API client written in node.js</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.nodemw">module nodemw</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.nodemw">
+            function <span class="apidocSignatureSpan"></span>nodemw
+            <span class="apidocSignatureSpan">(params)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api">
+            function <span class="apidocSignatureSpan">nodemw.</span>api
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">nodemw.</span>api.prototype</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.nodemw.api">module nodemw.api</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api.api">
+            function <span class="apidocSignatureSpan">nodemw.</span>api
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.nodemw.api.prototype">module nodemw.api.prototype</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api.prototype.call">
+            function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>call
+            <span class="apidocSignatureSpan">(params, callback, method)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api.prototype.error">
+            function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>error
+            <span class="apidocSignatureSpan">(msg, extra)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api.prototype.fetchUrl">
+            function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>fetchUrl
+            <span class="apidocSignatureSpan">(url, callback, encoding)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api.prototype.info">
+            function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>info
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api.prototype.log">
+            function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>log
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.nodemw.api.prototype.warn">
+            function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>warn
+            <span class="apidocSignatureSpan">(msg, extra)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.nodemw" id="apidoc.module.nodemw">module nodemw</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.nodemw" id="apidoc.element.nodemw.nodemw">
+        function <span class="apidocSignatureSpan"></span>nodemw
+        <span class="apidocSignatureSpan">(params)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">nodemw = function (params) {
+		let env = process.env,
+			options;
+
+		// read configuration from the file
+		if (typeof params === &#x27;string&#x27;) {
+			let configFile,
+				configParsed;
+
+			try {
+				configFile = fs.readFileSync(params, &#x27;utf-8&#x27;);
+				configParsed = JSON.parse(configFile);
+			}
+			catch(e) {
+				throw new Error(`Loading config failed: ${e.message}`);
+			}
+
+			if (typeof configParsed === &#x27;object&#x27;) {
+				options = configParsed;
+			}
+		}
+		// configuration provided as an object
+		else if (typeof params === &#x27;object&#x27;) {
+			options = params;
+		}
+
+		if (!params) {
+			throw new Error(&#x27;No configuration was provided!&#x27;);
+		}
+
+		this.protocol = options.protocol;
+		this.server = options.server;
+
+		const protocol = options.protocol || &#x27;http&#x27;;
+		this.api = new Api({
+			protocol,
+			port: options.port,
+			server: options.server,
+			path: options.path || &#x27;&#x27;,
+			proxy: options.proxy,
+			userAgent: options.userAgent,
+			concurrency: options.concurrency,
+			debug: (options.debug === true || env.DEBUG === &#x27;1&#x27;)
+		});
+
+		this.version = this.api.version;
+
+		// store options
+		this.options = options;
+
+		// in dry-run mode? (issue #48)
+		this.dryRun = (options.dryRun === true || env.DRY_RUN === &#x27;1&#x27;);
+
+		if (this.dryRun) {
+			this.log(&#x27;Running in dry-run mode&#x27;);
+		}
+
+		// bind provider-specific &#x22;namespaces&#x22;
+		this.wikia.call = this.wikia.call.bind(this);
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api" id="apidoc.element.nodemw.api">
+        function <span class="apidocSignatureSpan">nodemw.</span>api
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">api = function (options) {
+		this.protocol = options.protocol || &#x27;http&#x27;;
+		this.port = options.port || (this.protocol === &#x27;https&#x27; ? 443 : 80);
+		this.server = options.server;
+		this.path = options.path;
+		this.proxy = options.proxy;
+		this.jar = request.jar(); // create new cookie jar for each instance
+
+		this.debug = options.debug;
+
+		// set up logging
+		const winston = require(&#x27;winston&#x27;);
+		this.logger = new (winston.Logger)();
+
+		// console logging
+		if (this.debug) {
+			this.logger.add(winston.transports.Console, {
+				level: &#x27;debug&#x27;
+			});
+		}
+
+		this.logger.cli();
+
+		// file logging
+		const path = require(&#x27;path&#x27;),
+			fs = require(&#x27;fs&#x27;),
+			logDir = path.dirname(process.argv[1]) + &#x27;/log/&#x27;,
+			logFile = logDir + path.basename(process.argv[1], &#x27;.js&#x27;) + &#x27;.log&#x27;;
+
+		if (fs.existsSync(logDir)) {
+			this.logger.add(winston.transports.File, {
+				colorize: true,
+				filename: logFile,
+				json: false,
+				level: this.debug ? &#x27;debug&#x27; : &#x27;info&#x27;
+			});
+		}
+
+		// requests queue
+		// @see https://github.com/caolan/async#queue
+		const concurrency = options.concurrency || 3; // how many tasks (i.e. requests) to run in parallel
+		this.queue = async.queue(function(task, callback) {
+			// process the task (and call the provided callback once it&#x27;s completed)
+			task(callback);
+		}, concurrency);
+
+		// HTTP client
+		this.formatUrl = require(&#x27;url&#x27;).format;
+
+		this.userAgent = options.userAgent || (`nodemw v${VERSION} (node.js ${process.version}; ${process.platform} ${process.arch})`);
+		this.version = VERSION;
+
+		// debug info
+		this.info(process.argv.join(&#x27; &#x27;));
+		this.info(this.userAgent);
+		this.info(`Using &#x3c;${this.protocol}://${this.server}:${this.port}${this.path}/api.php&#x3e; as API entry point`);
+		this.info(&#x27;----&#x27;);
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.nodemw.api" id="apidoc.module.nodemw.api">module nodemw.api</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api.api" id="apidoc.element.nodemw.api.api">
+        function <span class="apidocSignatureSpan">nodemw.</span>api
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">api = function (options) {
+		this.protocol = options.protocol || &#x27;http&#x27;;
+		this.port = options.port || (this.protocol === &#x27;https&#x27; ? 443 : 80);
+		this.server = options.server;
+		this.path = options.path;
+		this.proxy = options.proxy;
+		this.jar = request.jar(); // create new cookie jar for each instance
+
+		this.debug = options.debug;
+
+		// set up logging
+		const winston = require(&#x27;winston&#x27;);
+		this.logger = new (winston.Logger)();
+
+		// console logging
+		if (this.debug) {
+			this.logger.add(winston.transports.Console, {
+				level: &#x27;debug&#x27;
+			});
+		}
+
+		this.logger.cli();
+
+		// file logging
+		const path = require(&#x27;path&#x27;),
+			fs = require(&#x27;fs&#x27;),
+			logDir = path.dirname(process.argv[1]) + &#x27;/log/&#x27;,
+			logFile = logDir + path.basename(process.argv[1], &#x27;.js&#x27;) + &#x27;.log&#x27;;
+
+		if (fs.existsSync(logDir)) {
+			this.logger.add(winston.transports.File, {
+				colorize: true,
+				filename: logFile,
+				json: false,
+				level: this.debug ? &#x27;debug&#x27; : &#x27;info&#x27;
+			});
+		}
+
+		// requests queue
+		// @see https://github.com/caolan/async#queue
+		const concurrency = options.concurrency || 3; // how many tasks (i.e. requests) to run in parallel
+		this.queue = async.queue(function(task, callback) {
+			// process the task (and call the provided callback once it&#x27;s completed)
+			task(callback);
+		}, concurrency);
+
+		// HTTP client
+		this.formatUrl = require(&#x27;url&#x27;).format;
+
+		this.userAgent = options.userAgent || (`nodemw v${VERSION} (node.js ${process.version}; ${process.platform} ${process.arch})`);
+		this.version = VERSION;
+
+		// debug info
+		this.info(process.argv.join(&#x27; &#x27;));
+		this.info(this.userAgent);
+		this.info(`Using &#x3c;${this.protocol}://${this.server}:${this.port}${this.path}/api.php&#x3e; as API entry point`);
+		this.info(&#x27;----&#x27;);
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.nodemw.api.prototype" id="apidoc.module.nodemw.api.prototype">module nodemw.api.prototype</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api.prototype.call" id="apidoc.element.nodemw.api.prototype.call">
+        function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>call
+        <span class="apidocSignatureSpan">(params, callback, method)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">call(params, callback, method) {
+			this.queue.push(done =&#x3e; {
+				doRequest.apply(this, [params, callback, method, done]);
+			});
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+		path: &#x27;/w&#x27;
+	}),
+	params = {
+		action: &#x27;ask&#x27;,
+		query: &#x27;[[Modification date::+]]|?Modification date|sort=Modification date|order=desc&#x27;
+	};
+
+client.api.<span class="apidocCodeKeywordSpan">call</span>(params /* api.php parameters */, function(err /* Error instance or null
+ */, info /* processed query result */, next /* more results? */, data /* raw data */) {
+	console.log(data &#x26;&#x26; data.query &#x26;&#x26; data.query.results);
+});
+```
+
+## Bot methods
+
+The last parameter of each function in nodemw API is a callback which will be fired when the requested action is done.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api.prototype.error" id="apidoc.element.nodemw.api.prototype.error">
+        function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>error
+        <span class="apidocSignatureSpan">(msg, extra)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">error(msg, extra) {
+			this.logger.error.apply(this.logger, arguments);
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    path: &#x27;/w&#x27;,                  // path to api.php script
+    debug: false                 // is more verbose when set to true
+  });
+
+  client.getArticle(&#x27;foo&#x27;, function(err, data) {
+    // error handling
+    if (err) {
+      console.<span class="apidocCodeKeywordSpan">error</span>(err);
+      return;
+    }
+
+    // ...
+  });
+```
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api.prototype.fetchUrl" id="apidoc.element.nodemw.api.prototype.fetchUrl">
+        function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>fetchUrl
+        <span class="apidocSignatureSpan">(url, callback, encoding)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fetchUrl(url, callback, encoding) {
+			const self = this;
+			encoding = encoding || &#x27;utf-8&#x27;;
+
+			// add a request to the queue
+			this.queue.push(function(done) {
+				self.info(&#x22;Fetching &#x3c;%s&#x3e; (as %s)...&#x22;, url, encoding);
+
+				request({
+					url,
+					encoding: (encoding === &#x27;binary&#x27;) ? null : encoding
+				}, function (error, response, body) {
+					if (!error &#x26;&#x26; response.statusCode === 200) {
+						self.info(&#x27;&#x3c;%s&#x3e;: fetched %s kB&#x27;, url, (body.length/1024).toFixed(2));
+						callback(null, body);
+					}
+					else {
+						if (!error) {
+							error = new Error(`HTTP status ${response.statusCode}`);
+						}
+
+						self.error(`Failed to fetch &#x3c;${url}&#x3e;`);
+						self.error(error.message);
+						callback(error, body);
+					}
+
+					done();
+				});
+			});
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Returns XML with preprocessed wikitext - [read more](https://www.mediawiki.org/wiki/API:Parsing_wikitext#expandtemplates)
+
+### bot.parse(content, title, callback)
+
+Returns parsed wikitext - [read more](https://www.mediawiki.org/wiki/API:Parsing_wikitext#parse)
+
+### bot.<span class="apidocCodeKeywordSpan">fetchUrl</span>(url, callback)
+
+Makes a GET request to provided resource and returns its content.
+
+### bot.getRecentChanges(start, callback)
+
+Returns entries from recent changes (starting from a given point)
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api.prototype.info" id="apidoc.element.nodemw.api.prototype.info">
+        function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>info
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">info() {
+			this.logger.info.apply(this.logger, arguments);
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+		// HTTP client
+		this.formatUrl = require(&#x27;url&#x27;).format;
+
+		this.userAgent = options.userAgent || (`nodemw v${VERSION} (node.js ${process.version}; ${process.platform} ${process.arch})`);
+		this.version = VERSION;
+
+		// debug info
+		this.<span class="apidocCodeKeywordSpan">info</span>(process.argv.join(&#x27; &#x27;));
+		this.info(this.userAgent);
+		this.info(`Using &#x3c;${this.protocol}://${this.server}:${this.port}${this.path}/api.php&#x3e; as API entry point`);
+		this.info(&#x27;----&#x27;);
+	};
+
+	const doRequest = function(params, callback, method, done) {
+		const self = this,
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api.prototype.log" id="apidoc.element.nodemw.api.prototype.log">
+        function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>log
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">log() {
+			this.logger.log.apply(this.logger, arguments);
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	}),
+	params = {
+		action: &#x27;ask&#x27;,
+		query: &#x27;[[Modification date::+]]|?Modification date|sort=Modification date|order=desc&#x27;
+	};
+
+client.api.call(params /* api.php parameters */, function(err /* Error instance or null */, info /* processed query result */, next
+ /* more results? */, data /* raw data */) {
+	console.<span class="apidocCodeKeywordSpan">log</span>(data &#x26;&#x26; data.query &#x26;&#x26; data.query.results);
+});
+```
+
+## Bot methods
+
+The last parameter of each function in nodemw API is a callback which will be fired when the requested action is done.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.nodemw.api.prototype.warn" id="apidoc.element.nodemw.api.prototype.warn">
+        function <span class="apidocSignatureSpan">nodemw.api.prototype.</span>warn
+        <span class="apidocSignatureSpan">(msg, extra)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">warn(msg, extra) {
+			this.logger.warn.apply(this.logger, arguments);
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
